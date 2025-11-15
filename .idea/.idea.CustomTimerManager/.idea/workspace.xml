@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="925bee87-6023-4596-9f82-992fd9877852" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/Tests/TimerManagerTester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/Tests/TimerManagerTester.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Readme.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,18 +15,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "NicoMassara"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;NicoMassara&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/NicoMassara/UnityPackage-CustomTimerManager.git",
-    "accountId": "3472aae9-5322-43ca-8a8b-e2fd2c393d5e"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/NicoMassara/UnityPackage-CustomTimerManager.git&quot;,
+    &quot;accountId&quot;: &quot;3472aae9-5322-43ca-8a8b-e2fd2c393d5e&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../../../Github/Meteor-Madness/Assets/_Main/Scripts/InspectorTools/ComponentsNameChange.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../Github/Meteor-Madness/Assets/_Main/Scripts/Managers/UpdateManager/UpdateManager.cs" root0="SKIP_HIGHLIGHTING" />
@@ -45,7 +45,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "develop",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -110,7 +110,7 @@
       <workItem from="1763213764873" duration="132000" />
       <workItem from="1763213943793" duration="8426000" />
       <workItem from="1763222555015" duration="28000" />
-      <workItem from="1763227462567" duration="1421000" />
+      <workItem from="1763227462567" duration="1594000" />
     </task>
     <servers />
   </component>
