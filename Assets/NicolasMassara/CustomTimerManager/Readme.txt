@@ -4,7 +4,7 @@
 
 Thank you for downloading my CustomTimerManager!
 
-This TimerManager is designed to be easy to use and flexible.
+This CustomTimerManager is designed to be easy to use and flexible.
 
 ### Creating a Timer
 
@@ -39,13 +39,17 @@ TimerManager.Remove(timerGeneratedId);
 
 ### Customization
 
-You can adapt TimerManager to your needs, such as integrating it with a custom update manager.
+You can adapt CustomTimerManager to your needs, such as integrating it with a custom update manager.
 
-### Feedback
+Feedback & Credits
 
-If you find TimerManager useful, please consider rating it and leaving a comment!
+If you find CustomTimerManager useful, please consider rating it and leaving a comment!
 
-Feel free to use it in the TestScene!
+If you use CustomTimerManager in your project, I’d really appreciate it if you could mention it with a link in your project’s credits.
+
+### Testing
+
+Feel free to use the TestScene!
 
 ------------------------------------
 Created by Nicolás Federico Massara
