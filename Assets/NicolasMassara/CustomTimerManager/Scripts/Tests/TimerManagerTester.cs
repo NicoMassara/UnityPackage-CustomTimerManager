@@ -1,0 +1,94 @@
+﻿using System;
+using UnityEngine;
+using NicolasMassara.CustomTimerManager.Tools;
+using UnityEditor;
+
+namespace NicolasMassara.CustomTimerManager.Tests
+{
+#if UNITY_EDITOR
+    public class TimerManagerTester : MonoBehaviour
+    {
+        [SerializeField] private TimerManagerTestData testMessage;
+        private TimerGeneratedId _timerId;
+        private bool _canExecute;
+
+        private void Awake()
+        {
+            _canExecute = true;
+            Application.targetFrameRate = 60;
+        }
+
+        public void AddTimer()
+        {
+            if (_canExecute == false) return;
+            
+            var timerData = new TimerData(testMessage.TargetTime, testMessage.Frequency,
+                testMessage.StartAction, testMessage.EndAction);
+            _timerId = TimerManager.Add(timerData);
+        }
+
+        public void RemoveTimer()
+        {
+            if (_canExecute == false) return;
+            
+            TimerManager.Remove(_timerId);
+        }
+    }
+
+    [Serializable]
+    public class TimerManagerTestData
+    {
+        [TextArea] [SerializeField]
+        private string messageToPrint = "Hello World!";
+        [Space]
+        [Range(0.1f, 60f)]
+        public float TargetTime = 5;
+        [Space]
+        public UpdateFrequency Frequency;
+
+        public void StartAction()
+        {
+            if (string.IsNullOrEmpty(messageToPrint))
+            {
+                messageToPrint = "Hello World!";
+            }
+
+            Debug.Log($"Printing Message in {TargetTime} seconds, Frequency set to: {Frequency}");
+        }
+
+        public void EndAction()
+        {
+            Debug.Log($"Message: {messageToPrint} printed in {TargetTime} seconds");
+        }
+    }
+    
+#endif
+#if UNITY_EDITOR
+    
+    [CustomEditor(typeof(TimerManagerTester))]
+    public class ComponentsNameChangeEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            // Dibuja el inspector normal
+            DrawDefaultInspector();
+
+            // Agrega el botón
+            TimerManagerTester script = (TimerManagerTester)target;
+            if (GUILayout.Button("Add Timer"))
+            {
+                // Llama al método normalmente
+                script.AddTimer();
+            }
+            
+            if (GUILayout.Button("Remove Time"))
+            {
+                // Llama al método normalmente
+                script.RemoveTimer();
+            }
+        }
+    }
+    
+#endif
+
+}
