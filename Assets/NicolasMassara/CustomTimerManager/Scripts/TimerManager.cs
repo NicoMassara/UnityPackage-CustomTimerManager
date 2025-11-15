@@ -11,11 +11,11 @@ namespace NicolasMassara.CustomTimerManager
     public enum UpdateFrequency
     {
         EveryFrame,     // Executes every frame
-        HalfFrame,      // Executes every 1/2 frame
-        ThirdFrame,     // Executes every 1/3 frame
-        QuarterFrame,   // Executes every 1/4 frame
-        EightFrame,     // Executes every 1/8 frame
-        SixteenthFrame, // Executes every 1/16 frame
+        HalfOfTarget,      // Executes every 1/2 frame
+        ThirdTarget,     // Executes every 1/3 frame
+        QuarterOfTarget,   // Executes every 1/4 frame
+        EightOfTarget,     // Executes every 1/8 frame
+        SixteenthOfTarget, // Executes every 1/16 frame
         EverySecond,    // Executes every 1 second
     }
 
@@ -88,11 +88,10 @@ namespace NicolasMassara.CustomTimerManager
                     return group switch
                     {
                         UpdateFrequency.EveryFrame => adaptiveFrameTime,
-                        UpdateFrequency.HalfFrame => adaptiveFrameTime * 2f,
-                        UpdateFrequency.ThirdFrame => adaptiveFrameTime * 3f,
-                        UpdateFrequency.QuarterFrame => adaptiveFrameTime * 4f,
-                        UpdateFrequency.EightFrame => adaptiveFrameTime * 8f,
-                        UpdateFrequency.SixteenthFrame => adaptiveFrameTime * 16f,
+                        UpdateFrequency.HalfOfTarget => adaptiveFrameTime * 2f,
+                        UpdateFrequency.QuarterOfTarget => adaptiveFrameTime * 4f,
+                        UpdateFrequency.EightOfTarget => adaptiveFrameTime * 8f,
+                        UpdateFrequency.SixteenthOfTarget => adaptiveFrameTime * 16f,
                         UpdateFrequency.EverySecond => 1f,
                         _ => adaptiveFrameTime
                     };
@@ -149,17 +148,16 @@ namespace NicolasMassara.CustomTimerManager
 
                 _elapsedSinceLastTick += deltaTime;
                 float interval = TimerTools.GetTickByFrequency(_timerData.Frequency, frameTime, _targetFrameRate);
-
                 
-
                 if (_elapsedSinceLastTick >= interval)
                 {
                     _elapsedSinceLastTick -= interval;
 
                     if (!_hasStarted)
                     {
-                        _timerData?.TriggerOnStartAction();
                         _hasStarted = true;
+                        _timerData?.TriggerOnStartAction();
+                        Debug.Log($"Timer Interval: {interval}");
                     }
 
                     _currentTime -= interval;

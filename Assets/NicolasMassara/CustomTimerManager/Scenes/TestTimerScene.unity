@@ -257,7 +257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testMessage:
     messageToPrint: Hello World!
-    TargetTime: 1
+    TargetTime: 5
     Frequency: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
