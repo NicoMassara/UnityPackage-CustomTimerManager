@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="925bee87-6023-4596-9f82-992fd9877852" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Readme.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Readme.txt.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/TimerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/TimerManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/Scenes/TestTimerScene.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/Scenes/TestTimerScene.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/Tests/TimerManagerTester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/NicolasMassara/CustomTimerManager/Scripts/Tests/TimerManagerTester.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +45,7 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -118,7 +110,7 @@
       <workItem from="1763213764873" duration="132000" />
       <workItem from="1763213943793" duration="8426000" />
       <workItem from="1763222555015" duration="28000" />
-      <workItem from="1763227462567" duration="1023000" />
+      <workItem from="1763227462567" duration="1421000" />
     </task>
     <servers />
   </component>

@@ -9,13 +9,18 @@ namespace NicolasMassara.CustomTimerManager.Tests
     public class TimerManagerTester : MonoBehaviour
     {
         [SerializeField] private TimerManagerTestData testMessage;
+        [Space] 
+        [Tooltip("Change will not apply during runtime")]
+        [Range(24, 165)] 
+        [SerializeField]
+        private int targetFrameRate = 60;
         private TimerGeneratedId _timerId;
         private bool _canExecute;
 
         private void Awake()
         {
             _canExecute = true;
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = targetFrameRate;
         }
 
         public void AddTimer()
