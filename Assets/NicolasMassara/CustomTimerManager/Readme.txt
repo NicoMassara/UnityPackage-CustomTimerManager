@@ -45,6 +45,8 @@ You can adapt TimerManager to your needs, such as integrating it with a custom u
 
 If you find TimerManager useful, please consider rating it and leaving a comment!
 
+Feel free to use it in the TestScene!
+
 ------------------------------------
 Created by Nicolás Federico Massara
 
