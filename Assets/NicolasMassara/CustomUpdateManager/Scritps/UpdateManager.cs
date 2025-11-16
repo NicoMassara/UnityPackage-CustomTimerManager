@@ -41,8 +41,11 @@ namespace NicolasMassara.CustomUpdateManager
             {
                 TickGroup.EveryFrame => adaptiveFrameTime,
                 TickGroup.HalfTarget => adaptiveFrameTime * 2,
-                TickGroup.QuarterTarget => adaptiveFrameTime *4,
+                TickGroup.QuarterTarget => adaptiveFrameTime * 4,
                 TickGroup.EightTarget => adaptiveFrameTime * 8,
+                TickGroup.SixteenthTarget => adaptiveFrameTime * 16,
+                TickGroup.ThirtySecondTarget => adaptiveFrameTime * 32,
+                TickGroup.SixtyFourthTarget => adaptiveFrameTime * 64,
                 TickGroup.EverySecond => 1f,
                 _ => throw new ArgumentOutOfRangeException(nameof(group), group, null)
             };
@@ -60,9 +63,9 @@ namespace NicolasMassara.CustomUpdateManager
             private readonly List<T> _toAdd = new List<T>();
             private readonly List<T> _toRemove = new List<T>();
             private readonly Dictionary<T, float> _accumulatedDeltaTimeDic = new Dictionary<T, float>();
-            
-            protected readonly int TargetFrameRate;
-            
+
+            protected int TargetFrameRate { get; private set; }
+
             public bool IsPaused;
             public int RunningCount => _running.Count;
 
@@ -91,7 +94,12 @@ namespace NicolasMassara.CustomUpdateManager
             }
 
             protected abstract void UpdateElement(T element);
-            
+
+
+            public void SetTargetFrameRate(int targetFrameRate)
+            {
+                TargetFrameRate = targetFrameRate;
+            }
 
             #region Add/Remove
 
@@ -283,7 +291,7 @@ namespace NicolasMassara.CustomUpdateManager
         
         // -------------------------------------------------------------
         
-        public const int TargetFrameRate = 120;
+        public const int TargetFrameRate = 60;
         
         public bool IsGlobalPaused { get; set; }
         
@@ -294,6 +302,14 @@ namespace NicolasMassara.CustomUpdateManager
             _updatableComponent = new UpdatableComponent(TargetFrameRate);
             _fixedUpdatableComponent = new FixedUpdatableComponent(TargetFrameRate);
             _lateUpdatableComponent = new LateUpdatableComponent(TargetFrameRate);
+        }
+
+        public void SetTargetFrameRate(int targetFrameRate)
+        {
+            Application.targetFrameRate = targetFrameRate;
+            _updatableComponent.SetTargetFrameRate(targetFrameRate);
+            _fixedUpdatableComponent.SetTargetFrameRate(targetFrameRate);
+            _lateUpdatableComponent.SetTargetFrameRate(targetFrameRate);
         }
 
         #region Update Actions

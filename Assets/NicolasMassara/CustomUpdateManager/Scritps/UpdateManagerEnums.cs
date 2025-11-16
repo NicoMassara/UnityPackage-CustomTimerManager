@@ -15,6 +15,9 @@
         HalfTarget,
         QuarterTarget,
         EightTarget,
+        SixteenthTarget,
+        ThirtySecondTarget,
+        SixtyFourthTarget,
         EverySecond
     }
 }
