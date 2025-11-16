@@ -149,25 +149,25 @@ namespace NicolasMassara.CustomTimerManager
                 _elapsedSinceLastTick += deltaTime;
                 float interval = TimerTools.GetTickByFrequency(_timerData.Frequency, frameTime, _targetFrameRate);
                 
-                if (_elapsedSinceLastTick >= interval)
+                if (!_hasStarted)
                 {
-                    _elapsedSinceLastTick -= interval;
-
-                    if (!_hasStarted)
-                    {
-                        _hasStarted = true;
-                        _timerData?.TriggerOnStartAction();
-                        Debug.Log($"Timer Interval: {interval}");
-                    }
-
-                    _currentTime -= interval;
-
-                    if (_currentTime <= 0)
-                    {
-                        _timerData?.TriggerOnEndAction();
-                        Reset();
-                    }
+                    _hasStarted = true;
+                    _timerData?.TriggerOnStartAction();
+                    Debug.Log($"Timer Interval: {interval}");
                 }
+                
+                if (_elapsedSinceLastTick < interval) 
+                    return;
+                
+                _currentTime -= _elapsedSinceLastTick;
+                _elapsedSinceLastTick = 0f;
+                
+                if (_currentTime <= 0)
+                {
+                    _timerData?.TriggerOnEndAction();
+                    Reset();
+                }
+                
             }
 
             /// <summary>
