@@ -208,22 +208,23 @@ namespace NicolasMassara.CustomUpdateManager
 
             protected override void UpdateElement(IUpdatable element)
             {
-                if(CustomTime.GetChannel(element.SelfUpdateGroup).IsPaused)
+                var chanel = CustomTime.GetChannel(element.SelfUpdateGroup);
+                
+                if (chanel.IsPaused)
                     return;
 
-                float frameTime = CustomTime.GetUnscaledDeltaTimeByChannel(element.SelfUpdateGroup);
-                float interval = GetTickByGroup(element.SelfTickGroup,frameTime ,TargetFrameRate);
-                var deltaTime = GetAccumulatedDeltaTime(element);
-                deltaTime += CustomTime.GetDeltaTimeByChannel(element.SelfUpdateGroup);
+                float unscaledDeltaTime = chanel.UnscaledDeltaTime;
+                float interval = GetTickByGroup(element.SelfTickGroup, unscaledDeltaTime, TargetFrameRate);
+                float accumulatedTime = GetAccumulatedDeltaTime(element);
+                accumulatedTime += chanel.DeltaTime;
 
-                if (deltaTime < interval)
+                while (accumulatedTime >= interval)
                 {
-                    SetAccumulatedDeltaTime(element, deltaTime);
-                    return;
+                    element.ExecuteUpdate(interval);
+                    accumulatedTime -= interval;
                 }
-                    
-                element.ExecuteUpdate(deltaTime);
-                SetAccumulatedDeltaTime(element, 0);
+                
+                SetAccumulatedDeltaTime(element, accumulatedTime);
             }
         }
         
@@ -239,19 +240,18 @@ namespace NicolasMassara.CustomUpdateManager
                 if(CustomTime.GetChannel(element.SelfUpdateGroup).IsPaused)
                     return;
 
-                float frameTime = CustomTime.GetUnscaledDeltaTimeByChannel(element.SelfUpdateGroup);
+                float frameTime = CustomTime.GetUnscaledFixedDeltaTimeByChannel(element.SelfUpdateGroup);
                 float interval = GetTickByGroup(element.SelfTickGroup,frameTime ,TargetFrameRate);
-                var deltaTime = GetAccumulatedDeltaTime(element);
-                deltaTime += CustomTime.GetDeltaTimeByChannel(element.SelfUpdateGroup);
+                var accumulatedDeltaTime = GetAccumulatedDeltaTime(element);
+                accumulatedDeltaTime += CustomTime.GetFixedDeltaTimeByChannel(element.SelfUpdateGroup);
 
-                if (deltaTime < interval)
+                while (accumulatedDeltaTime >= interval)
                 {
-                    SetAccumulatedDeltaTime(element, deltaTime);
-                    return;
+                    element.ExecuteFixedUpdate(interval);
+                    accumulatedDeltaTime -= interval;
                 }
-                    
-                element.ExecuteFixedUpdate(deltaTime);
-                SetAccumulatedDeltaTime(element, 0);
+
+                SetAccumulatedDeltaTime(element, accumulatedDeltaTime);;
             }
         }
         
@@ -264,22 +264,23 @@ namespace NicolasMassara.CustomUpdateManager
 
             protected override void UpdateElement(ILateUpdatable element)
             {
-                if(CustomTime.GetChannel(element.SelfUpdateGroup).IsPaused)
+                var chanel = CustomTime.GetChannel(element.SelfUpdateGroup);
+                
+                if (chanel.IsPaused)
                     return;
 
-                float frameTime = CustomTime.GetUnscaledDeltaTimeByChannel(element.SelfUpdateGroup);
-                float interval = GetTickByGroup(element.SelfTickGroup,frameTime ,TargetFrameRate);
-                var deltaTime = GetAccumulatedDeltaTime(element);
-                deltaTime += CustomTime.GetDeltaTimeByChannel(element.SelfUpdateGroup);
+                float unscaledDeltaTime = chanel.UnscaledDeltaTime;
+                float interval = GetTickByGroup(element.SelfTickGroup, unscaledDeltaTime, TargetFrameRate);
+                float accumulatedTime = GetAccumulatedDeltaTime(element);
+                accumulatedTime += chanel.DeltaTime;
 
-                if (deltaTime < interval)
+                while (accumulatedTime >= interval)
                 {
-                    SetAccumulatedDeltaTime(element, deltaTime);
-                    return;
+                    element.ExecuteLateUpdate(interval);
+                    accumulatedTime -= interval;
                 }
-                    
-                element.ExecuteLateUpdate(deltaTime);
-                SetAccumulatedDeltaTime(element, 0);
+                
+                SetAccumulatedDeltaTime(element, accumulatedTime);
             }
         }
 

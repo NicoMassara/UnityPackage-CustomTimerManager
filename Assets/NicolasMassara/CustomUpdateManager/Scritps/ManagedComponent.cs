@@ -11,7 +11,7 @@ namespace NicolasMassara.CustomUpdateManager
         private bool _isRegistered;
         private bool _disposed;
         
-        protected void Initialize()
+        protected void InitializeInManager()
         {
             if (!_isRegistered)
             {

@@ -21,7 +21,7 @@ namespace NicolasMassara.CustomUpdateManager.Test
 
         public ClassExample()
         {
-            base.Initialize();
+            base.InitializeInManager();
         }
 
         public void ExecuteUpdate(float deltaTime)
