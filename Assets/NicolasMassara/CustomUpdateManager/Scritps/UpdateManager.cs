@@ -65,6 +65,7 @@ namespace NicolasMassara.CustomUpdateManager
             private readonly Dictionary<T, float> _accumulatedDeltaTimeDic = new Dictionary<T, float>();
 
             protected int TargetFrameRate { get; private set; }
+            protected int MaxTicksPerFrame { get; set; } = 5;
 
             public bool IsPaused;
             public int RunningCount => _running.Count;
@@ -217,13 +218,23 @@ namespace NicolasMassara.CustomUpdateManager
                 float interval = GetTickByGroup(element.SelfTickGroup, unscaledDeltaTime, TargetFrameRate);
                 float accumulatedTime = GetAccumulatedDeltaTime(element);
                 accumulatedTime += chanel.DeltaTime;
+                
+                // Tick cap
+                int ticksExecuted = 0;
+                
 
-                while (accumulatedTime >= interval)
+                while (accumulatedTime >= interval && ticksExecuted < MaxTicksPerFrame)
                 {
                     element.ExecuteUpdate(interval);
                     accumulatedTime -= interval;
+                    ticksExecuted++;
                 }
                 
+                if (accumulatedTime > interval)
+                {
+                    accumulatedTime = interval;
+                }
+
                 SetAccumulatedDeltaTime(element, accumulatedTime);
             }
         }
@@ -237,21 +248,32 @@ namespace NicolasMassara.CustomUpdateManager
 
             protected override void UpdateElement(IFixedUpdatable element)
             {
-                if(CustomTime.GetChannel(element.SelfUpdateGroup).IsPaused)
+                var chanel = CustomTime.GetChannel(element.SelfUpdateGroup);
+                
+                if (chanel.IsPaused)
                     return;
 
-                float frameTime = CustomTime.GetUnscaledFixedDeltaTimeByChannel(element.SelfUpdateGroup);
-                float interval = GetTickByGroup(element.SelfTickGroup,frameTime ,TargetFrameRate);
-                var accumulatedDeltaTime = GetAccumulatedDeltaTime(element);
-                accumulatedDeltaTime += CustomTime.GetFixedDeltaTimeByChannel(element.SelfUpdateGroup);
+                float unscaledFixedDeltaTime = chanel.UnscaledFixedDeltaTime;
+                float interval = GetTickByGroup(element.SelfTickGroup, unscaledFixedDeltaTime, TargetFrameRate);
+                float accumulatedTime = GetAccumulatedDeltaTime(element);
+                accumulatedTime += chanel.FixedDeltaTime;
 
-                while (accumulatedDeltaTime >= interval)
+                // Tick cap
+                int ticksExecuted = 0;
+
+                while (accumulatedTime >= interval && ticksExecuted < MaxTicksPerFrame)
                 {
                     element.ExecuteFixedUpdate(interval);
-                    accumulatedDeltaTime -= interval;
+                    accumulatedTime -= interval;
+                    ticksExecuted++;
+                }
+                
+                if (accumulatedTime > interval)
+                {
+                    accumulatedTime = interval;
                 }
 
-                SetAccumulatedDeltaTime(element, accumulatedDeltaTime);;
+                SetAccumulatedDeltaTime(element, accumulatedTime);
             }
         }
         
@@ -274,12 +296,22 @@ namespace NicolasMassara.CustomUpdateManager
                 float accumulatedTime = GetAccumulatedDeltaTime(element);
                 accumulatedTime += chanel.DeltaTime;
 
-                while (accumulatedTime >= interval)
+                // Tick cap
+                int ticksExecuted = 0;
+                
+
+                while (accumulatedTime >= interval && ticksExecuted < MaxTicksPerFrame)
                 {
                     element.ExecuteLateUpdate(interval);
                     accumulatedTime -= interval;
+                    ticksExecuted++;
                 }
                 
+                if (accumulatedTime > interval)
+                {
+                    accumulatedTime = interval;
+                }
+
                 SetAccumulatedDeltaTime(element, accumulatedTime);
             }
         }
@@ -294,7 +326,8 @@ namespace NicolasMassara.CustomUpdateManager
         
         public const int TargetFrameRate = 60;
         
-        public bool IsGlobalPaused { get; set; }
+        public bool IsUpdatePaused { get; set; }
+        public bool IsFixedUpdatePaused { get; set; }
         
         private void Awake()
         {
@@ -317,16 +350,18 @@ namespace NicolasMassara.CustomUpdateManager
 
         private void Update()
         {
-            CustomTime.UpdateAll(IsGlobalPaused ? 0 : Time.unscaledDeltaTime);
-            IsGlobalPaused = _updatableComponent.IsPaused;
+            CustomTime.UpdateAll(IsUpdatePaused ? 0 : Time.unscaledDeltaTime);
+            _updatableComponent.IsPaused = IsUpdatePaused;
+            if(IsUpdatePaused) return;
             
             _updatableComponent.UpdateComponents();
         }
 
         private void FixedUpdate()
         {
-            CustomTime.FixedUpdateAll(IsGlobalPaused ? 0 : Time.fixedUnscaledDeltaTime);
-            IsGlobalPaused = _fixedUpdatableComponent.IsPaused;
+            CustomTime.FixedUpdateAll(IsFixedUpdatePaused ? 0 : Time.fixedUnscaledDeltaTime);
+            _fixedUpdatableComponent.IsPaused  = IsFixedUpdatePaused;
+            if(IsFixedUpdatePaused) return;
             
             _fixedUpdatableComponent.UpdateComponents();
         }
@@ -334,7 +369,8 @@ namespace NicolasMassara.CustomUpdateManager
         
         private void LateUpdate()
         {
-            IsGlobalPaused = _lateUpdatableComponent.IsPaused;
+            _lateUpdatableComponent.IsPaused  = IsUpdatePaused;
+            if(IsUpdatePaused) return;
             
             _lateUpdatableComponent.UpdateComponents();
         }

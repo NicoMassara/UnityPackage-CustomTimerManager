@@ -9,19 +9,24 @@ namespace NicolasMassara.CustomUpdateManager.Test
         [Header("Speed")]
         [Range(1,500)]
         [SerializeField] private float rotationSpeed;
+        [SerializeField] private bool isUpdatePaused;
 
         [Header("Frame Rate")]
         [Range(1, 240)] 
         [SerializeField] private int frameRate = 60;
+        
         
         [Header("Update Group")]
         [SerializeField] private UpdateGroup updateGroup;
         [Range(0, 1)]
         [SerializeField] 
         private float timeScale = 1;
+        [SerializeField] private bool isPaused = false;
 
         private bool _hasStarted;
         private int _lastFrameRate;
+        private bool _wasPaused;
+        private bool _wasUpdatePaused;
         private UpdateGroup _lastUpdateGroup;
         private float _lastTimeScale;
         public float RotationSpeed => rotationSpeed;
@@ -46,6 +51,18 @@ namespace NicolasMassara.CustomUpdateManager.Test
             {
                 CustomTime.SetChannelTimeScale(updateGroup, timeScale);
                 _lastTimeScale = timeScale;
+            }
+
+            if (_wasPaused != isPaused)
+            {
+                CustomTime.SetChannelPaused(updateGroup, isPaused);
+                _wasPaused = isPaused;
+            }
+            
+            if (_wasUpdatePaused != isUpdatePaused)
+            {
+                UpdateManager.Instance.IsUpdatePaused = isUpdatePaused;
+                _wasUpdatePaused = isUpdatePaused;
             }
         }
         
